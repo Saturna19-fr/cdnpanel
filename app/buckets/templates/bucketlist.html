@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,8 +13,8 @@
 
         .card {
             padding: 20px;
-            width: 600px;
-            height: 300px;
+            /* width: 600px; */
+            /* height: 300px; */
             background-color: #fff;
             border-radius: 10px;
             margin: 100px auto;
@@ -35,14 +35,15 @@
     {% for object in objects %}
         <div class="card">
             <div class="header">
-                <h1>{{object.name}}</h1>
+                <h1>{{object.correct_name}}</h1>
     
                 <p>{{object.type}}</p>
     
             </div>
     
-            <p>Ceci est une image upload le 262155Z par Saturna19 sur le Bucket <code></code>storage</code></p>
+            <!-- <p>Ceci est une image upload le 262155Z par Saturna19 sur le Bucket <code></code>storage</code></p> -->
             <a href="{{object.generate_dl_link()}}">Télécharger</a>
+            <!-- <a href="{{object.generate_dl_link()}}">Delete</a> -->
         </div>
     {% endfor %}
 </body>

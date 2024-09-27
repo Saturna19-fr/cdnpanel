@@ -7,9 +7,13 @@
 </head>
 <body>
     <h1>Upload files</h1>
-    <form action="/store/upload" method="post">
+    <form method="post" action="/store/upload" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+      </form>
+    <!-- <form action="/store/upload" method="post">
         <input type="file" name="file" id="file">
         <input type="submit" value="Upload">
-    </form>
+    </form> -->
 </body>
 </html>

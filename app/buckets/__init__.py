@@ -18,6 +18,8 @@ def search_by_bucket(bucket_name:str):
     a = minio.list_objects(bucket_name)
     do = []
     for minobj in a:
-        obj = CDNO(minobj.object_name, bucket_name)
+        obj2 = minio.stat_object(bucket_name=bucket_name, object_name=minobj.object_name)
+
+        obj = CDNO(minobj.object_name, bucket_name, special_name = obj2.metadata.get("X-Amz-Meta-Filename"))
         do.append(obj)
     return render_template("bucketlist.html", bucket_name=bucket_name, objects=do)

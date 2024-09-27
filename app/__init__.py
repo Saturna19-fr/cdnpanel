@@ -1,4 +1,5 @@
 from flask import Flask
+# from flask_login import LoginManager
 def create_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "iugeu_zhui(-è_hfroe'fhrijehè)"
@@ -20,5 +21,6 @@ def create_app():
     app.register_blueprint(buckets, url_prefix='/buckets/')
     app.register_blueprint(store, url_prefix='/store/')
 
-
+    # login_manager = LoginManager()
+    # login_manager.init_app(app)
     return app

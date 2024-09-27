@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-
 # Create a Blueprint
 auth = Blueprint('auth', __name__, template_folder='templates')
 
