@@ -1,0 +1,45 @@
+{% block header%}
+<div class="topheader">
+    <button onclick="window.location = '/'">
+      <div class="svg-wrapper-1">
+        <div class="svg-wrapper">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="30"
+            height="30"
+            class="icon"
+          >
+            <path
+              d="M22,15.04C22,17.23 20.24,19 18.07,19H5.93C3.76,19 2,17.23 2,15.04C2,13.07 3.43,11.44 5.31,11.14C5.28,11 5.27,10.86 5.27,10.71C5.27,9.33 6.38,8.2 7.76,8.2C8.37,8.2 8.94,8.43 9.37,8.8C10.14,7.05 11.13,5.44 13.91,5.44C17.28,5.44 18.87,8.06 18.87,10.83C18.87,10.94 18.87,11.06 18.86,11.17C20.65,11.54 22,13.13 22,15.04Z"
+            ></path>
+          </svg>
+        </div>
+      </div>
+      <span>CDN</span>
+    </button>
+
+    
+    <div id="name">
+        <b>{{current_user.is_authenticated and current_user.name or "Non Identifié"}} <b>
+    </div>
+    <div id="buttons">
+        <ul>
+            {% if current_user.is_authenticated %}
+                <li><a href='{{url_for("store.store_page")}}'>Deposer</a></li>
+                <li><a href='{{url_for("buckets.search_by_bucket", bucket_name="storage")}}'>Retirer</a></li>
+            {% else %}
+                <li><a href='{{url_for("auth.login")}}'>Se connecter</a></li>
+            {% endif %}
+            
+        </ul>
+    </div>
+</div>
+<div id="auth">
+    {% if current_user.is_authenticated %}
+        Hi {{ current_user.name }}!
+    {% else %}
+        Vous n'êtes pas connecté.
+    {% endif %}
+</div>
+{% endblock %}

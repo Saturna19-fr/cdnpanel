@@ -1,9 +1,22 @@
 {% extends "base.html" %}
 
 {% block title %}Page d'acceuil{% endblock %}
+{% block head %}
+<style>
+    #content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-    <h1>Page d'acceuil</h1>
-    <p>Bienvenue sur ma page d'acceuil.</p>
+    <h1>Bienvenue sur le <code>Panel CDN</code></h1>
+    <p>Vous pouvez accéder à la page de connexion çi dessous.</p>
     <a href="/auth/login">Connexion</a>
+{% endblock %}
+
+
+{% block scripts %}
 {% endblock %}
