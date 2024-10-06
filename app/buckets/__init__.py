@@ -13,13 +13,17 @@ def home():
 
 @buckets.route('/<string:bucket_name>')
 def search_by_bucket(bucket_name:str):
-    if not minio.bucket_exists(bucket_name):
-        return f"404 Bucket non existant"
-    a = minio.list_objects(bucket_name)
-    do = []
-    for minobj in a:
-        obj2 = minio.stat_object(bucket_name=bucket_name, object_name=minobj.object_name)
+    try:
+        if not minio.bucket_exists(bucket_name):
+            return f"404 Bucket non existant"
+        a = minio.list_objects(bucket_name)
+        do = []
+        for minobj in a:
+            obj2 = minio.stat_object(bucket_name=bucket_name, object_name=minobj.object_name)
 
-        obj = CDNO(minobj.object_name, bucket_name, special_name = obj2.metadata.get("X-Amz-Meta-Filename"))
-        do.append(obj)
-    return render_template("bucketlist.html", bucket_name=bucket_name, objects=do)
+            obj = CDNO(minobj.object_name, bucket_name, special_name = obj2.metadata.get("X-Amz-Meta-Filename"))
+            do.append(obj)
+        return render_template("bucketlist.html", bucket_name=bucket_name, objects=do)
+    except:
+        flash("Une erreur de conenction a MinIO s'est produite", "error")
+        return redirect(url_for("app.home"))
