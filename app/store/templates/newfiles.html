@@ -1,19 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Upload files</h1>
+{% extends "base.html" %}
+{% block title %}Ajout de fichier - Saturna19's CDN{% endblock %}
+
+{% block content %}
+<h1>Upload files</h1>
     <form method="post" action="/store/upload" enctype="multipart/form-data">
-        <input type="file" name="file">
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Default file input example</label>
+            <input class="form-control" type="file" name="file" id="formFile">
+          </div>
         <input type="submit" value="Upload">
       </form>
-    <!-- <form action="/store/upload" method="post">
-        <input type="file" name="file" id="file">
-        <input type="submit" value="Upload">
-    </form> -->
-</body>
-</html>
+{% endblock %}
