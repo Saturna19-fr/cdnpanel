@@ -1,16 +1,11 @@
 from flask import Flask
-# from flask_login import LoginManager
+from flask_login import LoginManager
+
+from .utils.user import users_dict_updated
 def create_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "iugeu_zhui(-è_hfroe'fhrijehè)"
 
-
-    # print(minio.list_buckets())
-    # print(f"https://cdn-minio.vofasn.easypanel.host/storage/test.txt")
-
-    # # minio.fput_object("storage", "test.txt", "test.txt")
-    # a = minio.fget_object("storage", "test.txt", "test.txt")
-    # a.
     from .views import views
     from .auth import auth
     from .buckets import buckets
@@ -20,7 +15,14 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/auth/')
     app.register_blueprint(buckets, url_prefix='/buckets/')
     app.register_blueprint(store, url_prefix='/store/')
+    
+    login_manager = LoginManager()
+    login_manager.login_view = "auth.login"
+    @login_manager.user_loader
+    def load_user(user_id):
+        user_data = users_dict_updated.get(user_id)
+        return user_data
 
-    # login_manager = LoginManager()
-    # login_manager.init_app(app)
+
+    login_manager.init_app(app)
     return app
