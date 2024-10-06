@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import login_required
 from werkzeug.utils import secure_filename
 import os
 import uuid
@@ -10,6 +11,7 @@ from ..utils.minio import minio as minio_client
 store = Blueprint('store', __name__, template_folder='templates')
 
 @store.route('/')
+@login_required
 def store_page():
     return render_template("newfiles.html")
 
@@ -24,14 +26,18 @@ def upload():
     if file.filename == '':
         flash('No selected file')
         return redirect(request.url)
-    
-    fdata = file.stream.read()
+    print("test passed")
+    try:
+        fdata = file.stream.read()
     #file.save(os.path.join("uploads", f"{uuid.uuid4()}_{secure_filename(file.filename)}"))
 
-    pfp_data = file.read()
-    file.seek(0)
-    minio_client.put_object(bucket_name="storage", object_name=f"{uuid.uuid4()}_{secure_filename(file.filename)}", data=file.stream, length=len(fdata), content_type=file.content_type, metadata={"FILENAME": secure_filename(file.filename)})
+        file.seek(0)
+        minio_client.put_object(bucket_name="storage", object_name=f"{uuid.uuid4()}_{secure_filename(file.filename)}", data=file.stream, length=len(fdata), content_type=file.content_type, metadata={"FILENAME": secure_filename(file.filename)})
 
     # minio_client.put_object(bucket_name="storage", object_name=f"{uuid.uuid4()}_{secure_filename(file.filename)}", data=file.stream, length=len(fdata), content_type=file.content_type)
-    print("saved")
-    return redirect(url_for('store.store_page'))
+        print("saved")
+        flash(f"Le fichier {file.filename} a été enregistré correctement.")
+        return redirect(url_for('store.store_page'))
+    except:
+        flash("Une erreur s'est produite", 'error')
+        return redirect(url_for('store.store_page'))
